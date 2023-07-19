@@ -38,16 +38,27 @@ export class Tab1Page {
     });
 
     await alert.present();
-    const data = await alert.onDidDismiss();
-    const values = data.data.values;
 
-    return [values[0], values[1]]
+    try {
+      const data = await alert.onDidDismiss();
+      const values = data.data.values;
+      return [values[0], values[1]];
+    } catch {
+      return null;
+    }
   }
 
   async addItem() {
-    const [name, quantity] = await this.presentAddBox();
-    const newItem = new GroceryItem(name, Number(quantity));
-    this.items.push(newItem);
+    const result = await this.presentAddBox();
+
+    if (result) {
+      let [name, quantity] = result;
+      quantity = Math.abs(Number(quantity));
+      if (!quantity) quantity = 1;
+
+      const newItem = new GroceryItem(name, quantity);
+      this.items.push(newItem);
+    }
   }
 
   removeItem(i: number) {
