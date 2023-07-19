@@ -25,6 +25,16 @@ export class Tab1Page {
 
   constructor(private alertController: AlertController, private toastController: ToastController) {}
 
+  async parseGroceryItemInput(alert: HTMLIonAlertElement) {
+    try {
+      const data = await alert.onDidDismiss();
+      const values = data.data.values;
+      return [values[0], values[1]];
+    } catch {
+      return null;
+    }
+  }
+  
   async presentAddBox() {
     const inputs = [
       {placeholder: 'Item Name'},
@@ -38,14 +48,7 @@ export class Tab1Page {
     });
 
     await alert.present();
-
-    try {
-      const data = await alert.onDidDismiss();
-      const values = data.data.values;
-      return [values[0], values[1]];
-    } catch {
-      return null;
-    }
+    return this.parseGroceryItemInput(alert);
   }
 
   async presentEditBox(item: GroceryItem) {
@@ -61,14 +64,7 @@ export class Tab1Page {
     });
 
     await alert.present();
-
-    try {
-      const data = await alert.onDidDismiss();
-      const values = data.data.values;
-      return [values[0], values[1]];
-    } catch {
-      return null;
-    }
+    return this.parseGroceryItemInput(alert);
   }
 
   async presentToast(message: string, duration: number=1250, position: 'top'|'bottom'|'middle'='bottom') {
