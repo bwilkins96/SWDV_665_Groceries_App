@@ -1,6 +1,6 @@
 import { Component, numberAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, AlertController } from '@ionic/angular';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
 class GroceryItem {
@@ -23,7 +23,7 @@ class GroceryItem {
 export class Tab1Page {
   items: Array<GroceryItem> = [];
 
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController, private toastController: ToastController) {}
 
   async presentAddBox() {
     const inputs = [
@@ -48,6 +48,16 @@ export class Tab1Page {
     }
   }
 
+  async presentToast(message: string, duration: number=1250, position: 'top'|'bottom'|'middle'='bottom') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      position: position
+    });
+
+    await toast.present();
+  }
+
   async addItem() {
     const result = await this.presentAddBox();
 
@@ -58,6 +68,7 @@ export class Tab1Page {
 
       const newItem = new GroceryItem(name, quantity);
       this.items.push(newItem);
+      this.presentToast('Grocery item added successfully!');
     }
   }
 
