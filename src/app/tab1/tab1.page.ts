@@ -48,7 +48,9 @@ export class Tab1Page {
     const [name, quantity] = await this.presentAddBox();
     const newItem = new GroceryItem(name, Number(quantity));
     this.items.push(newItem);
+  }
 
-    console.log(this.items);
+  removeItem(i: number) {
+    this.items.splice(i, 1);
   }
 }
