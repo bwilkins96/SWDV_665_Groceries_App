@@ -19,7 +19,7 @@
       <ion-label>Quantity</ion-label>
     </ion-list-header>
 
-    <ion-item-sliding *ngFor="let item of items; index as i">
+    <ion-item-sliding *ngFor="let item of loadItems(); index as i">
       <ion-item>
         <ion-label>{{ item.name }}</ion-label>
         <ion-label>{{ item.quantity }}</ion-label>

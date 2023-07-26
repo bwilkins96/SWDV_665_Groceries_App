@@ -3,15 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
-class GroceryItem {
-  name: string;
-  quantity: number;
-
-  constructor(name: string, quantity: number) {
-    this.name = name;
-    this.quantity = quantity;
-  }
-}
+import { GroceryDataService } from '../services/grocery-data.service';
+import { GroceryItem } from '../classes/grocery-item';
 
 @Component({
   selector: 'app-tab1',
@@ -21,9 +14,9 @@ class GroceryItem {
   imports: [IonicModule, ExploreContainerComponent, CommonModule],
 })
 export class Tab1Page {
-  items: Array<GroceryItem> = [];
-
-  constructor(private alertController: AlertController, private toastController: ToastController) {}
+  constructor(private alertController: AlertController, 
+    private toastController: ToastController,
+    private groceryDataService: GroceryDataService) {}
 
   async parseGroceryItemInput(alert: HTMLIonAlertElement) {
     try {
@@ -77,21 +70,15 @@ export class Tab1Page {
     await toast.present();
   }
 
-  processQuantityInput(quantity: any) {
-    quantity = Math.abs(Number(quantity));
-    if (!quantity) quantity = 1;
-    return quantity;
+  loadItems() {
+    return this.groceryDataService.getItems();
   }
 
   async addItem() {
     const result = await this.presentAddBox();
 
     if (result) {
-      let [name, quantity] = result;
-      quantity = this.processQuantityInput(quantity);      
-
-      const newItem = new GroceryItem(name, quantity);
-      this.items.push(newItem);
+      this.groceryDataService.addItem(result);
       this.presentToast('Grocery item added successfully!');
     }
   }
@@ -100,15 +87,11 @@ export class Tab1Page {
     const result = await this.presentEditBox(item);
 
     if (result) {
-      let [name, quantity] = result;
-      quantity = this.processQuantityInput(quantity);
-      
-      item.name = name;
-      item.quantity = quantity;
+      this.groceryDataService.editItem(item, result);
     } 
   }
 
   removeItem(i: number) {
-    this.items.splice(i, 1);
+    this.groceryDataService.removeItem(i);
   }
 }
