@@ -37,9 +37,11 @@ export class InputDialogService {
       },
       {
         placeholder: 'Quantity', 
-        value: item ? item.quantity : null
+        type: 'number',
+        value: item ? item.quantity : null,
+        min: 1
       }
-    ]
+    ];
 
     const alert = await this.alertController.create({
       header: item ? 'Edit Grocery Item' : 'Add Grocery Item',
