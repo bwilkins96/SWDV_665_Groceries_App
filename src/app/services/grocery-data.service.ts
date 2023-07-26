@@ -13,23 +13,15 @@ export class GroceryDataService {
     return this.items;
   }
 
-  processQuantityInput(quantity: any) {
-    quantity = Math.abs(Number(quantity));
-    if (!quantity) quantity = 1;
-    return quantity;
-  }
-
-  async addItem(result: any) {
-    let [name, quantity] = result;
-    quantity = this.processQuantityInput(quantity);      
-
+  async addItem(result: Array<any>) {
+    let [name, quantity] = result;      
+    
     const newItem = new GroceryItem(name, quantity);
     this.items.push(newItem);
   }
 
-  async editItem(item: GroceryItem, result: any) {
+  async editItem(item: GroceryItem, result: Array<any>) {
     let [name, quantity] = result;
-    quantity = this.processQuantityInput(quantity);
     
     item.name = name;
     item.quantity = quantity;

@@ -9,11 +9,21 @@ export class InputDialogService {
 
   constructor(private alertController: AlertController) { }
 
+  private processQuantityInput(quantity: any) {
+    quantity = Math.abs(Number(quantity));
+    if (!quantity) quantity = 1;
+    return quantity;
+  }
+
   private async parseGroceryItemInput(alert: HTMLIonAlertElement) {
     try {
       const data = await alert.onDidDismiss();
       const values = data.data.values;
-      return [values[0], values[1]];
+
+      const name = values[0];
+      const quantity = this.processQuantityInput(values[1]);
+      
+      return [name, quantity];
     } catch {
       return null;
     }
