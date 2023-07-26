@@ -23,38 +23,28 @@ export class InputDialogService {
       const name = values[0];
       const quantity = this.processQuantityInput(values[1]);
       
-      return [name, quantity];
+      return name ? [name, quantity]: null;
     } catch {
       return null;
     }
   }
-  
-  async presentAddBox() {
+
+  async presentInputBox(item: GroceryItem | null = null) {
     const inputs: AlertInput[] = [
-      {placeholder: 'Item Name'},
-      {placeholder: 'Quantity'},
+      {
+        placeholder:  'Item Name', 
+        value: item ? item.name : null
+      },
+      {
+        placeholder: 'Quantity', 
+        value: item ? item.quantity : null
+      }
     ]
 
     const alert = await this.alertController.create({
-      header: 'Add Grocery Item',
+      header: item ? 'Edit Grocery Item' : 'Add Grocery Item',
       inputs: inputs,
-      buttons: ['Add Item']
-    });
-
-    await alert.present();
-    return this.parseGroceryItemInput(alert);
-  }
-
-  async presentEditBox(item: GroceryItem) {
-    const inputs: AlertInput[] = [
-      {placeholder: 'Item Name', value: item.name},
-      {placeholder: 'Quantity', value: item.quantity}
-    ]
-
-    const alert = await this.alertController.create({
-      header: 'Edit Grocery Item',
-      inputs: inputs,
-      buttons: ['Update Item']
+      buttons: item ? ['Update Item'] : ['Add Item']
     });
 
     await alert.present();

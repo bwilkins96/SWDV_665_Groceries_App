@@ -36,7 +36,7 @@ export class Tab1Page {
   }
 
   async addItem() {
-    const result = await this.inputDialogService.presentAddBox();
+    const result = await this.inputDialogService.presentInputBox();
 
     if (result) {
       this.groceryDataService.addItem(result);
@@ -45,7 +45,7 @@ export class Tab1Page {
   }
 
   async editItem(item: GroceryItem) {
-    const result = await this.inputDialogService.presentEditBox(item);
+    const result = await this.inputDialogService.presentInputBox(item);
 
     if (result) {
       this.groceryDataService.editItem(item, result);
