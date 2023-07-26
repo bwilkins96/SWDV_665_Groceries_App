@@ -13,14 +13,14 @@ export class GroceryDataService {
     return this.items;
   }
 
-  async addItem(result: Array<any>) {
+  addItem(result: Array<any>) {
     let [name, quantity] = result;      
     
     const newItem = new GroceryItem(name, quantity);
     this.items.push(newItem);
   }
 
-  async editItem(item: GroceryItem, result: Array<any>) {
+  editItem(item: GroceryItem, result: Array<any>) {
     let [name, quantity] = result;
     
     item.name = name;

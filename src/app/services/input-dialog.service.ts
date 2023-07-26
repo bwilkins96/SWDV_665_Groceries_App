@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, AlertInput } from '@ionic/angular';
 import { GroceryItem } from '../classes/grocery-item';
 
 @Injectable({
@@ -30,9 +30,9 @@ export class InputDialogService {
   }
   
   async presentAddBox() {
-    const inputs = [
+    const inputs: AlertInput[] = [
       {placeholder: 'Item Name'},
-      {placeholder: 'Quantity'}
+      {placeholder: 'Quantity'},
     ]
 
     const alert = await this.alertController.create({
@@ -46,7 +46,7 @@ export class InputDialogService {
   }
 
   async presentEditBox(item: GroceryItem) {
-    const inputs = [
+    const inputs: AlertInput[] = [
       {placeholder: 'Item Name', value: item.name},
       {placeholder: 'Quantity', value: item.quantity}
     ]
