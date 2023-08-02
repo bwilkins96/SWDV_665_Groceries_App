@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
+import { Share, ShareOptions } from '@capacitor/share';
+
 import { GroceryItem } from '../classes/grocery-item';
 import { GroceryDataService } from '../services/grocery-data.service';
 import { InputDialogService } from '../services/input-dialog.service';
@@ -54,5 +56,19 @@ export class Tab1Page {
 
   removeItem(i: number) {
     this.groceryDataService.removeItem(i);
+  }
+
+  async shareItem(item: GroceryItem) {
+    const shareOptions: ShareOptions = {
+      title: 'Grocery Item - shared from Groceries App',
+      text: `Name: ${item.name}\nQuantity: ${item.quantity}`
+    };
+
+    try {
+      await Share.share(shareOptions);
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
