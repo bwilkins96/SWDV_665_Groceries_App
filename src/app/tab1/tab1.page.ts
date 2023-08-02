@@ -1,9 +1,8 @@
 import { Component, numberAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
-
 import { Share, ShareOptions } from '@capacitor/share';
+import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
 import { GroceryItem } from '../classes/grocery-item';
 import { GroceryDataService } from '../services/grocery-data.service';
