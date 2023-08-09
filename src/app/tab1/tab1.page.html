@@ -19,11 +19,11 @@
       <ion-label>Quantity</ion-label>
     </ion-list-header>
 
-    <div class="ion-text-center" *ngIf="loadItems().length === 0">
+    <!-- <div class="ion-text-center" *ngIf="loadItems().length === 0">
       <h5>There are no items on your list!</h5>
-    </div>
+    </div> -->
     
-    <ion-item-sliding *ngFor="let item of loadItems(); index as i">
+    <ion-item-sliding *ngFor="let item of groceryDataService.items; index as i">
       <ion-item>
         <ion-label>{{ item.name }}</ion-label>
         <ion-label>{{ item.quantity }}</ion-label>
