@@ -65,8 +65,8 @@ export class Tab1Page {
     } 
   }
 
-  removeItem(i: number) {
-    this.groceryDataService.removeItem(i);
+  removeItem(item: GroceryItem) {
+    this.groceryDataService.removeItem(item);
   }
 
   async shareItem(item: GroceryItem) {
