@@ -8,7 +8,7 @@ import { Observable, Subject, map, catchError } from 'rxjs';
   providedIn: 'root'
 })
 export class GroceryDataService {
-  public items: Array<GroceryItem> = [];
+  private items: Array<GroceryItem> = [];
   private serverURL = 'http://localhost:8080/api/groceries';
   
   private dataChangeSubject: Subject<boolean>;
@@ -20,13 +20,12 @@ export class GroceryDataService {
   }
 
   loadItems() {
-    console.log('data service loadItems called');
     const req = this.http.get(this.serverURL, { observe: 'response' });
     
     req.subscribe(
       (res) => {
         const body = res.body;
-        if (Array.isArray(body)) this.items = body; console.log(body);
+        if (Array.isArray(body)) this.items = body;
       }
     );
   }
@@ -38,17 +37,15 @@ export class GroceryDataService {
   addItem(result: Array<any>) {
     let [name, quantity] = result;      
     const newItem = new GroceryItem(name, quantity);
-    // this.items.push(newItem);
 
     this.http.post(this.serverURL, newItem).subscribe(
       res => {
         this.dataChangeSubject.next(true);
-        console.log(this.items);
       }
     );
   }
 
-  editItem(item: any, result: Array<any>) {
+  editItem(item: GroceryItem, result: Array<any>) {
     let [name, quantity] = result;
     const updated_item = {name: name, quantity: quantity};
 
@@ -59,8 +56,7 @@ export class GroceryDataService {
     );
   }
 
-  removeItem(item: any) {
-    console.log(item);
+  removeItem(item: GroceryItem) {
     this.http.delete(this.serverURL + '/' + item._id).subscribe(
       res => {
         this.dataChangeSubject.next(true)

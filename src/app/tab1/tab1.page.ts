@@ -18,20 +18,16 @@ import { InputDialogService } from '../services/input-dialog.service';
 export class Tab1Page {
   constructor(
     private toastController: ToastController,
-    public groceryDataService: GroceryDataService,
+    private groceryDataService: GroceryDataService,
     private inputDialogService: InputDialogService
     ) {
       groceryDataService.dataChanged.subscribe((dataChanged: boolean) => {
-        if (dataChanged) this.loadItems();
-        console.log('data change called');
+        if (dataChanged) this.groceryDataService.loadItems();
       })
     }
 
-  items: any[] = this.groceryDataService.getItems();
-
   ionViewDidEnter() {
-    console.log('ion view load called');
-    this.loadItems();
+    this.groceryDataService.loadItems();
   }
 
   async presentToast(message: string, duration: number=1250, position: 'top'|'bottom'|'middle'='bottom') {
@@ -44,8 +40,8 @@ export class Tab1Page {
     await toast.present();
   }
 
-  loadItems() {
-    this.groceryDataService.loadItems();
+  getItems() {
+    return this.groceryDataService.getItems();
   }
 
   async addItem() {
