@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GroceryItem } from '../classes/grocery-item';
 
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, map, catchError } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
