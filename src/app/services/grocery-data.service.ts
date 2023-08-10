@@ -26,7 +26,7 @@ export class GroceryDataService {
     req.subscribe(
       (res) => {
         const body = res.body;
-        if (Array.isArray(body)) this.items = body;
+        if (Array.isArray(body)) this.items = body; console.log(body);
       }
     );
   }
@@ -43,21 +43,25 @@ export class GroceryDataService {
     this.http.post(this.serverURL, newItem).subscribe(
       res => {
         this.dataChangeSubject.next(true);
+        console.log(this.items);
       }
     );
   }
 
   editItem(item: any, result: Array<any>) {
     let [name, quantity] = result;
-    
-    item.name = name;
-    item.quantity = quantity;
+    const updated_item = {name: name, quantity: quantity};
 
-    this.http.put(this.serverURL + item._id, result).subscribe();
+    this.http.put(this.serverURL + '/' + item._id, updated_item).subscribe(
+      res => {
+        this.dataChangeSubject.next(true);
+      }
+    );
   }
 
   removeItem(item: any) {
-    this.http.delete(this.serverURL + item._id).subscribe(
+    console.log(item);
+    this.http.delete(this.serverURL + '/' + item._id).subscribe(
       res => {
         this.dataChangeSubject.next(true)
       }
