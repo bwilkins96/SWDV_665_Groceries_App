@@ -27,7 +27,7 @@ export class Tab1Page {
       })
     }
 
-  items: any[] = [];
+  items: any[] = this.groceryDataService.getItems();
 
   ionViewDidEnter() {
     console.log('ion view load called');
@@ -45,8 +45,7 @@ export class Tab1Page {
   }
 
   loadItems() {
-    this.items = this.groceryDataService.getItems();
-    console.log('\n', this.items);
+    this.groceryDataService.loadItems();
   }
 
   async addItem() {
