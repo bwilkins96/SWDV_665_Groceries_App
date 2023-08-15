@@ -9,7 +9,12 @@ import { Observable, Subject } from 'rxjs';
 })
 export class GroceryDataService {
   private items: Array<GroceryItem> = [];
-  private serverURL = 'http://localhost:8080/api/groceries';
+
+  // Local MongoDB server url
+  // private serverURL = 'http://localhost:8080/api/groceries';
+  
+  // Heroku-based MongoDB server url
+  private serverURL = "https://groceries-server-swdv665-3e1baaf1fcd1.herokuapp.com/api/groceries";
   
   private dataChangeSubject: Subject<boolean>;
   public dataChanged: Observable<boolean>;
